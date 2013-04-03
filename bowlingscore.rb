@@ -14,10 +14,20 @@ class BowlingScore
     calc_score(frameCount)
   end
   
-  def total
+  def total_score
     sum = 0
     @frameList.each {|x| sum += x.score }
     return sum
+  end
+  
+  def total_score_on_each_frame
+    scoreList = Array.new
+    sum = 0
+    @frameList.each do |x|
+      sum += x.score
+      scoreList.push sum
+    end
+    return scoreList
   end
   
 private

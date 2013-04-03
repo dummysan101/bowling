@@ -18,4 +18,5 @@ bowling = BowlingScore.new
   end
 end
 
-puts bowling.total
+puts bowling.total_score
+puts bowling.total_score_on_each_frame.join(" ")

@@ -21,5 +21,5 @@ end
 #
 desc "run test"
 task :test do
-  system("ruby testrunner.rb")
+  system("ruby test/runner.rb")
 end

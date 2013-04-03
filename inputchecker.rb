@@ -1,11 +1,13 @@
 module InputChecker
-  LastFrame = 10
   def check_bowl_result(frame, data)
     begin
-      if frame != LastFrame
+      case frame
+      when 1..9
         return false unless ( ( 1 <= data.size ) && ( data.size <= 2 ) )
-      else
+      when 10
         return false unless ( ( 1 <= data.size ) && ( data.size <= 3 ) )
+      else
+        return false
       end
       
       return false unless check_number(data)

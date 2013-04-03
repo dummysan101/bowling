@@ -2,26 +2,35 @@
 exit if defined?(Ocra)
 
 unless ARGV.size == 1
+  puts "ERROR: Argument!"
+  puts
   puts "[Usage]"
-  puts "  #{__FILE__} test-file"
+  puts "  #{__FILE__} exec-file"
   exit
 end
 
 target_file = ARGV[0]
 
+unless File.exist?(target_file)
+  puts "ERROR: File not found. -> #{target_file}"
+  exit
+end
+
 case_file_list = Dir.glob("case/*.txt")
 case_file_list.each do |fname|
-  # 期待値はファイル最終行に記されている.
-  expected = nil
+  data = Array.new
   File.open(fname, "r") do |f|
     f.each_line do |line|
-      expected = f.gets.chomp
+      data.push line.chomp
     end
   end
   
+  data.compact!
+  expected = data[-2..-1]
+  
   # 起動
   actual = `#{target_file} < #{fname}`
-  actual.chomp!
+  actual = actual.chomp.split("\n")
   
   # 結果表示
   print "#{File.basename(fname)}  "
@@ -29,7 +38,7 @@ case_file_list.each do |fname|
     puts "OK"
   else
     puts "NG"
-    puts "  Actual   : #{actual}"
-    puts "  Expected : #{expected}"
+    puts "  Actual   : #{actual.inspect}"
+    puts "  Expected : #{expected.inspect}"
   end
 end
